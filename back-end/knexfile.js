@@ -4,14 +4,14 @@
  * You will not need to make changes to this file.
  */
 
-require('dotenv').config();
+require("dotenv").config();
 const path = require("path");
 
 const {
-  DATABASE_URL = "postgresql://postgres@localhost/postgres",
-  DATABASE_URL_DEVELOPMENT = "postgresql://postgres@localhost/postgres",
-  DATABASE_URL_TEST = "postgresql://postgres@localhost/postgres",
-  DATABASE_URL_PREVIEW = "postgresql://postgres@localhost/postgres",
+  DATABASE_URL = "postgres://erceehsr:PMRo5LkQw9-4maPyO02j83Y6qkklz5oX@salt.db.elephantsql.com/erceehsr",
+  DATABASE_URL_DEVELOPMENT = "postgres://qubzevwf:vyoq17ZG5AXKyHnRFPeuM5P_Ol5N1ThL@salt.db.elephantsql.com/qubzevwf",
+  DATABASE_URL_TEST = "postgres://cjnyuivm:k3w67yusvH40jSNwgbF4aIXJEUEfopBX@salt.db.elephantsql.com/cjnyuivm",
+  DATABASE_URL_PREVIEW = "postgres://ggccfikr:f9Dz7z15gKuBEdnjOxhwou5MZ-nq_Uw1@salt.db.elephantsql.com/ggccfikr",
   DEBUG,
 } = process.env;
 
