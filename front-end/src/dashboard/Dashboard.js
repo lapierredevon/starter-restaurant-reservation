@@ -24,26 +24,40 @@ function Dashboard({ date }) {
     date = queryDate;
   }
 
-  useEffect(loadDashboard, [date]);
-
-  function loadDashboard() {
+  useEffect(() => {
     const abortController = new AbortController();
-    setReservationsError(null);
-    setTablesError(null);
+    const loadReservations = async () => {
+      try {
+        const recallReservations = await listReservations(
+          { date },
+          abortController.signal
+        );
+        const rsvps = recallReservations.filter((rsvp) => {
+          if (rsvp.status !== "cancelled" || rsvp.status !== "finished") {
+            return rsvp;
+          }
+        });
+        setReservations(rsvps);
+      } catch (error) {
+        setReservationsError(error.message);
+      }
+    };
 
-    listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .catch(setReservationsError);
+    const loadTables = async () => {
+      try {
+        const recallTables = await listTables(abortController.signal);
+        setTables(recallTables);
+      } catch (error) {
+        setTables(error.message);
+      }
+    };
 
-    listTables(abortController.signal).then(setTables).catch(setTablesError);
-
+    loadReservations();
+    loadTables();
     return () => abortController.abort();
-  }
+  }, [date]);
 
   const listRsvp = reservations.map((reservation) => {
-    if (reservation.status === "cancelled" || reservation.status === "finished")
-      return null;
-
     return (
       <ReservationsList
         key={reservation.reservation_id}
@@ -55,7 +69,7 @@ function Dashboard({ date }) {
   return (
     <main>
       <h1>Dashboard</h1>
-      <div className="btn-group" role="group">
+      <div className="btn-group grid gap-3" role="group">
         <div>
           <Link
             to={`/dashboard?date=${previous(date)}`}
