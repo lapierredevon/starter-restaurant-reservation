@@ -19,11 +19,11 @@ function Dashboard({ date }) {
   const [tables, setTables] = useState([]);
 
   // Stores the query value if there is one present in the url
-  const queryDate = useQuery().get("date");
+  const dateQuery = useQuery().get("date");
   const history = useHistory();
 
-  if (queryDate) {
-    date = queryDate;
+  if (dateQuery) {
+    date = dateQuery;
   }
 
   const dateObj = new Date(`${date} PDT`);
