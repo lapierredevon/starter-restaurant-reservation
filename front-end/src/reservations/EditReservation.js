@@ -19,6 +19,9 @@ export default function EditReservation() {
   const [formData, setFormData] = useState(initialFormData);
   const [errorArray, setErrorArray] = useState([]);
 
+  // Sends a get request to API using readReservation and reservation_id as an argument.
+  // stores the data returned from API in initialFormData
+  // Sets formData to initialFormData
   useEffect(() => {
     const abortController = new AbortController();
     const loadReservation = async () => {
@@ -48,12 +51,11 @@ export default function EditReservation() {
     return () => abortController.abort();
   }, [reservation_id]);
 
+  // Sends a put request to API with the new reservation information
   const handleSubmit = async (event) => {
     event.preventDefault();
     const abortController = new AbortController();
     formData.people = Number(formData.people);
-    // reservationValidation(formData);
-    // validateTime(formData.reservation_time);
     const putReservation = async () => {
       try {
         await updateReservation(
@@ -77,15 +79,12 @@ export default function EditReservation() {
     });
   };
 
-  // handleSubmit handleChange handleCancel formData
   return (
     <div>
       <h1>Edit Reservation</h1>
-      {errorArray.length !== 0 && (
-        <div>
-          <ErrorAlert error={errorArray} />
-        </div>
-      )}
+      <div>
+        <ErrorAlert error={errorArray} />
+      </div>
       <div>
         <ReservationForm
           handleChange={handleChange}

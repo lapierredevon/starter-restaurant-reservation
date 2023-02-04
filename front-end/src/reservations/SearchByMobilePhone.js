@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
-// import { listReservations } from "../utils/api";
 import ReservationsList from "../reservations/ReservationsList";
 import { useHistory } from "react-router";
 import { searchReservationByPhone } from "../utils/api";
@@ -23,6 +22,8 @@ export default function SearchByMobilePhone() {
     });
   };
 
+  // Sends a get request with the mobile number as a query.
+  // The data returned from the get request is stored in state.
   const handleSubmit = async (event) => {
     event.preventDefault();
     const abortController = new AbortController();
@@ -38,7 +39,7 @@ export default function SearchByMobilePhone() {
   };
 
   const handleCancel = () => {
-    history.push("/dashboard");
+    history.push("/");
   };
 
   return (

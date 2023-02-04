@@ -7,7 +7,7 @@ export default function ReservationsList({ reservation }) {
   const [error, setError] = useState([]);
   const history = useHistory();
 
-  // This function sends an update request to the API
+  // This function sends an PUT request to the API
   // Updates the reservation status to cancelled
   // If user selects ok on the window.confirm message
   async function handleCancel(event) {

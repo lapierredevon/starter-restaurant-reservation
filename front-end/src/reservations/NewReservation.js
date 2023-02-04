@@ -15,14 +15,14 @@ function NewReservation() {
     people: "",
   };
 
-  const [reservation, setReservation] = useState(initialFormState);
+  const [formData, setFormData] = useState(initialFormState);
   const [reservationError, setReservationError] = useState([]);
 
   const history = useHistory();
 
   const handleChange = ({ target }) => {
-    setReservation({
-      ...reservation,
+    setFormData({
+      ...formData,
       [target.name]: target.value,
     });
   };
@@ -36,8 +36,8 @@ function NewReservation() {
     event.preventDefault();
 
     try {
-      let rsvp = reservation;
-      setReservation(initialFormState);
+      let rsvp = formData;
+      setFormData(initialFormState);
       rsvp.people = Number(rsvp.people);
       await postReservations(rsvp, abortController.signal);
 
@@ -57,7 +57,7 @@ function NewReservation() {
         <h2>Reservation</h2>
         <ErrorAlert error={reservationError} />
         <ReservationForm
-          reservation={reservation}
+          reservation={formData}
           handleSubmit={handleSubmit}
           handleChange={handleChange}
         />

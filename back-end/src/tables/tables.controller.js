@@ -182,7 +182,7 @@ const seatReservation = async (req, res, next) => {
 };
 
 // This validation middleware removes reservation_id from the table, changes the reservation status to finished, and table status to free
-const removeReservation = async (req, res, next) => {
+const finishReservation = async (req, res, next) => {
   const table = res.locals.table;
   const updatedTable = {
     ...table,
@@ -218,10 +218,10 @@ module.exports = {
     isTableOccupied,
     asyncErrorBoundary(seatReservation),
   ],
-  removeReservation: [
+  finishReservation: [
     asyncErrorBoundary(tableExists),
     tableIsNotOccupied,
     asyncErrorBoundary(findReservation),
-    asyncErrorBoundary(removeReservation),
+    asyncErrorBoundary(finishReservation),
   ],
 };

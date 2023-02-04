@@ -17,7 +17,7 @@ export default function SeatReservation() {
   const { reservation_id } = useParams();
 
   // read reservation from database by reservation_id
-  // load all tables from database
+  // load all tables from database and store the array of tables that have a free status in state
   useEffect(() => {
     const abortController = new AbortController();
 
@@ -64,10 +64,11 @@ export default function SeatReservation() {
     });
   };
 
+  // Sends a put request to the API
+  // Put request updates the status of the table to occupied and the status of the reservation to seated
   const handleSubmit = (event) => {
     event.preventDefault();
     const abortController = new AbortController();
-    // PUT request
     async function seatReservation() {
       try {
         await seatTable(form, reservation_id, abortController.signal);

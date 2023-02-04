@@ -4,7 +4,6 @@ import useQuery from "../utils/useQuery";
 import { today, previous, next } from "../utils/date-time";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationsList from "../reservations/ReservationsList";
-import { Link } from "react-router-dom";
 import TableList from "../tables/TablesList";
 import { useHistory } from "react-router-dom";
 

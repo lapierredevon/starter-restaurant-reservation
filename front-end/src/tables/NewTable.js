@@ -19,17 +19,16 @@ function NewTable() {
     setTable({ ...table, [target.name]: target.value });
   };
 
+  //
   async function submitHandler(event) {
     const abortController = new AbortController();
     event.preventDefault();
-    const newTable = {
-      table_name: table.table_name,
-      capacity: Number(table.capacity),
-    };
+    let newTable = table;
+    setTable(initialFormState);
+    newTable.capacity = Number(newTable.capacity);
 
     try {
       await postTables(newTable, abortController.signal);
-      setTable(initialFormState);
       history.push(`/dashboard`);
     } catch (error) {
       setTableError([error.message]);

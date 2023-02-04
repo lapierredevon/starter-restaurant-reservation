@@ -68,7 +68,7 @@ export async function listReservations(params, signal) {
     .then(formatReservationTime);
 }
 
-// Posts new reservation to the database
+// Posts new reservation in the database
 export async function postReservations(reservation, signal) {
   const url = `${API_BASE_URL}/reservations`;
   const options = {
@@ -97,7 +97,7 @@ export async function listTables(signal) {
   return await fetchJson(url, { signal });
 }
 
-// reads a reservation by reservation_id
+// sends a get request to API to return the table with the matching_id
 export async function readReservation(reservation_id, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}`;
   return await fetchJson(url, { signal });
@@ -119,6 +119,7 @@ export async function seatTable(table, reservation_id, signal) {
   return await fetchJson(url, options, {});
 }
 
+// Sends a delete request to database, request updates table status to free and reservation status to finished
 export async function finishTable(table_id, signal) {
   const url = `${API_BASE_URL}/tables/${table_id}/seat`;
   const options = {
@@ -129,6 +130,7 @@ export async function finishTable(table_id, signal) {
   return await fetchJson(url, options, {});
 }
 
+// Sends a put request to database, request updates  reservation status to cancelled
 export async function cancelReservationStatus(reservation_id, status, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}/status`;
 
@@ -142,11 +144,14 @@ export async function cancelReservationStatus(reservation_id, status, signal) {
   return await fetchJson(url, option, {});
 }
 
+// Sends a get request to API using mobile number as a query,
+// API returns all the reservations with a matching phone number
 export async function searchReservationByPhone(mobile_number, signal) {
   const url = `${API_BASE_URL}/reservations?mobile_number=${mobile_number}`;
   return await fetchJson(url, { signal });
 }
 
+// Sends a put request to API that updates the reservation with the matching id.
 export async function updateReservation(form, reservation_id, signal) {
   const url = `${API_BASE_URL}/reservations/${reservation_id}`;
   const option = {

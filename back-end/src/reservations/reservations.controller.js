@@ -51,7 +51,7 @@ const hasValidProperties = (req, res, next) => {
     if (property === "people" && !Number.isInteger(data.people)) {
       return next({
         status: 400,
-        message: `Your party size ${property} must be an integer greater than or equal to 1.`,
+        message: `Your party size ${property} must be at least 1.`,
       });
     }
 
@@ -62,7 +62,7 @@ const hasValidProperties = (req, res, next) => {
     ) {
       return next({
         status: 400,
-        message: `You must enter the date ${property} you would like to dine with us in YYYY-MM-DD format.`,
+        message: `Date ${property} must match the YYYY-MM-DD format`,
       });
     }
 
@@ -73,7 +73,7 @@ const hasValidProperties = (req, res, next) => {
     ) {
       return next({
         status: 400,
-        message: `You must enter the time ${property} you would like to dine with us in HH:MM format.`,
+        message: `Time ${property} must match the HH:MM format.`,
       });
     }
   });
