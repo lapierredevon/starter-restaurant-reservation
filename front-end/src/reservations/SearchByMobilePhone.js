@@ -84,7 +84,7 @@ export default function SearchByMobilePhone() {
             <div className="container">
               <div className="row">
                 {displaySearchResults.map((rsvp) => (
-                  <div key={rsvp.reservation_id} className="mt-5">
+                  <div key={rsvp.reservation_id} className="mt-5 mr-3">
                     <ReservationsList reservation={rsvp} />
                   </div>
                 ))}

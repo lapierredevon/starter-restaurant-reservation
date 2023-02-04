@@ -39,15 +39,12 @@ export default function TableForm({ table, changeHandler, submitHandler }) {
             <br />
           </div>
         </div>
-        <div>
-          <button className="btn btn-dark btn-lg btn-block" type="submit">
+        <div className="text-center">
+          <button className="btn btn-dark mr-3" type="submit">
             Submit
           </button>
-        </div>
-        <br />
-        <div>
           <button
-            className="btn btn-danger btn-lg btn-block"
+            className="btn btn-outline-dark"
             onClick={() => history.goBack()}
           >
             Cancel
