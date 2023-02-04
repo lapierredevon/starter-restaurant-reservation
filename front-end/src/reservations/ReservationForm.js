@@ -47,7 +47,7 @@ export default function ReservationForm({
               name="mobile_number"
               className="form-control"
               id="mobile_number"
-              placeholder="(___)-___-____"
+              placeholder="111-222-3333"
               onChange={handleChange}
               value={`${reservation.mobile_number}`}
               required={true}
@@ -100,19 +100,15 @@ export default function ReservationForm({
               min="1"
               required={true}
             />
-            <br />
           </div>
         </div>
-        <div>
-          <button className="btn btn-dark" type="submit">
+        <div className="text-center">
+          <Link to={"/"}>
+            <button className="btn btn-dark btn-lg mr-3">Cancel</button>
+          </Link>
+          <button className="btn btn-outline-dark btn-lg" type="submit">
             Submit
           </button>
-        </div>
-        <br />
-        <div>
-          <Link to={"/"}>
-            <button className="btn btn-danger">Cancel</button>
-          </Link>
         </div>
       </form>
     </div>

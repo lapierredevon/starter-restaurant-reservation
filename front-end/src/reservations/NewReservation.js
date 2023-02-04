@@ -16,41 +16,9 @@ function NewReservation() {
   };
 
   const [reservation, setReservation] = useState(initialFormState);
-  const [reservationError, setReservationError] = useState(null);
+  const [reservationError, setReservationError] = useState([]);
 
   const history = useHistory();
-
-  //   function formatDate(date) {
-  //     let formatedDate = date.split("");
-  //     formatedDate.splice(10);
-  //     formatedDate = formatedDate.join("");
-  //     return formatedDate;
-  //   }
-
-  //   function formatTime(time) {
-  //     let formatedTime = time.split("");
-  //     formatedTime.splice(5);
-  //     formatedTime = formatedTime.join("");
-  //     return formatedTime;
-  //   }
-
-  //   const changeHandler = ({ target }) => {
-  //     const { name, value } = target;
-  //     switch (name) {
-  //       case "people":
-  //         setReservation({ ...reservation, [name]: parseInt(value) });
-  //         break;
-  //       case "reservation_date":
-  //         setReservation({ ...reservation, [name]: formatDate(value) });
-  //         break;
-  //       case "reservation_time":
-  //         setReservation({ ...reservation, [name]: formatTime(value) });
-  //         break;
-  //       default:
-  //         setReservation({ ...reservation, [name]: value });
-  //         break;
-  //     }
-  //   };
 
   const handleChange = ({ target }) => {
     setReservation({
@@ -59,20 +27,13 @@ function NewReservation() {
     });
   };
 
+  // Initialize a variable with reservation object
+  // restore reservations data to its initial state
+  // change the value of  rsvp.people to a number
+  // Send a post request with the new reservation using postReservation
   async function handleSubmit(event) {
     const abortController = new AbortController();
     event.preventDefault();
-
-    setReservationError(null);
-    // const newRes = {
-    //   first_name: reservation.first_name,
-    //   last_name: reservation.last_name,
-    //   mobile_number: reservation.mobile_number,
-    //   people: Number(reservation.people),
-    //   reservation_date: reservation.reservation_date,
-    //   reservation_time: reservation.reservation_time,
-    //   status: "booked",
-    // };
 
     try {
       let rsvp = reservation;
@@ -82,7 +43,7 @@ function NewReservation() {
 
       history.push(`/dashboard?date=${rsvp.reservation_date}`);
     } catch (error) {
-      if (error.name !== "AbortError") setReservationError(error);
+      setReservationError([...reservationError, error.message]);
     }
 
     return () => {
@@ -93,7 +54,7 @@ function NewReservation() {
   return (
     <section>
       <div>
-        <h2>Book your reservation today</h2>
+        <h2>Reservation</h2>
         <ErrorAlert error={reservationError} />
         <ReservationForm
           reservation={reservation}

@@ -4,12 +4,14 @@ import ErrorAlert from "../layout/ErrorAlert";
 import { cancelReservationStatus } from "../utils/api";
 
 export default function ReservationsList({ reservation }) {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState([]);
   const history = useHistory();
 
+  // This function sends an update request to the API
+  // Updates the reservation status to cancelled
+  // If user selects ok on the window.confirm message
   async function handleCancel(event) {
     event.preventDefault();
-    setError(null);
     const abortController = new AbortController();
     if (
       window.confirm(
@@ -25,35 +27,35 @@ export default function ReservationsList({ reservation }) {
         );
         history.go(0);
       } catch (error) {
-        if (error.name !== "AbortError") setError(error);
+        setError([error.message]);
       }
     }
   }
 
   return (
-    <div>
+    <div className="card border-dark text-center mb-3">
       <hr />
-
       <ErrorAlert error={error} />
-
       <div key={reservation.reservation_id}>
-        <h6 data-reservation-id-status={`${reservation.reservation_id}`}>
-          {reservation.status}
-        </h6>
-
-        <h5>
-          {reservation.last_name}, {reservation.first_name}
-        </h5>
-
-        <h6>{reservation.mobile_number}</h6>
-
-        <h6>
-          {reservation.reservation_date} at {reservation.reservation_time} for{" "}
-          {reservation.people}
-        </h6>
-
+        <div className="card-header bg-dark text-white">
+          <h4>
+            {reservation.last_name} {reservation.first_name} Reservation
+          </h4>
+        </div>
+        <div className="card-body">
+          <p
+            data-reservation-id-status={`${reservation.reservation_id}`}
+            className="card-text"
+          >
+            <strong>Status:</strong> {reservation.status} <br />
+            <strong>Mobile Number:</strong> {reservation.mobile_number} <br />
+            <strong>Date:</strong> {reservation.reservation_date} <br />
+            <strong>Time:</strong> {reservation.reservation_time} <br />
+            <strong>Party Size:</strong> {reservation.people} <br />
+          </p>
+        </div>
         {reservation.status === "booked" ? (
-          <button className="btn btn-dark">
+          <button className="btn btn-dark mr-2">
             <Link
               to={`/reservations/${reservation.reservation_id}/seat`}
               style={{ color: "white" }}
@@ -64,7 +66,7 @@ export default function ReservationsList({ reservation }) {
         ) : null}
 
         {reservation.status === "booked" ? (
-          <button className="btn btn-outline-dark">
+          <button className="btn btn-outline-dark mr-2">
             <Link
               to={`/reservations/${reservation.reservation_id}/edit`}
               style={{ color: "black" }}
@@ -75,7 +77,7 @@ export default function ReservationsList({ reservation }) {
         ) : null}
 
         <button
-          className="btn btn-danger"
+          className="btn btn-dark mr-2"
           data-reservation-id-cancel={reservation.reservation_id}
           onClick={handleCancel}
         >

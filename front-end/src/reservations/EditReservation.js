@@ -48,45 +48,6 @@ export default function EditReservation() {
     return () => abortController.abort();
   }, [reservation_id]);
 
-  // const reservationValidation = (formData) => {
-  //   const date = new Date(`${formData.reservation_date} PDT`);
-  //   const reservation = date.getTime();
-  //   const now = Date.now();
-
-  //   let err = [];
-
-  //   if (date.getUTCDay() === 2) {
-  //     err.push("Restaurant is closed on Tuesday.");
-  //   }
-
-  //   if (reservation < now) {
-  //     err.push("Select a future date for reservation.");
-  //   }
-
-  //   if (err.length) {
-  //     setErrorArray([...err]);
-  //   }
-  // };
-
-  // const validateTime = (time) => {
-  //   const open = 10 * 60 + 30;
-  //   const close = 21 * 60 + 30;
-  //   const lastCall = 21 * 60;
-  //   const hours = Number(time.substring(0, 2));
-  //   const minutes = Number(time.substring(3));
-  //   const rsvpTime = hours * 60 + minutes;
-
-  //   const errs = [];
-
-  //   if (rsvpTime < open || rsvpTime > lastCall) {
-  //     errs.push("Reservation between 10:30am and 9:30pm");
-  //   }
-
-  //   if (errs.length) {
-  //     setErrorArray([...errorArray, ...errs]);
-  //   }
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const abortController = new AbortController();
@@ -102,7 +63,7 @@ export default function EditReservation() {
         );
         history.push(`/dashboard?date=${formData.reservation_date}`);
       } catch (error) {
-        setErrorArray(error.message);
+        setErrorArray([error.message]);
       }
     };
 

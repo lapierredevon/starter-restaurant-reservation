@@ -11,7 +11,7 @@ export default function SeatReservation() {
   const [form, setForm] = useState({ ...initialFormState });
   const [reservation, setReservation] = useState({});
   const [tables, setTables] = useState([]);
-  const [seatError, setSeatError] = useState(null);
+  const [seatError, setSeatError] = useState([]);
 
   const history = useHistory();
   const { reservation_id } = useParams();
@@ -36,7 +36,7 @@ export default function SeatReservation() {
         setReservation(reservationResponse);
         setTables(freeTables);
       } catch (error) {
-        setSeatError(error.message);
+        setSeatError([error.message]);
       }
     }
     loadData();
@@ -50,11 +50,11 @@ export default function SeatReservation() {
     );
 
     if (!selectedTable) {
-      setSeatError("Please select a table.");
+      setSeatError(["Please select a table."]);
     }
 
     if (selectedTable && selectedTable.capacity < reservation.people) {
-      setSeatError("Reservation party size will not fit at selected table.");
+      setSeatError(["Reservation party size will not fit at selected table."]);
     }
 
     // set the form state

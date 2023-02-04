@@ -11,7 +11,7 @@ function NewTable() {
   };
 
   const [table, setTable] = useState({ ...initialFormState });
-  const [tableError, setTableError] = useState(null);
+  const [tableError, setTableError] = useState([]);
 
   const history = useHistory();
 
@@ -22,8 +22,6 @@ function NewTable() {
   async function submitHandler(event) {
     const abortController = new AbortController();
     event.preventDefault();
-
-    setTableError(null);
     const newTable = {
       table_name: table.table_name,
       capacity: Number(table.capacity),
@@ -34,7 +32,7 @@ function NewTable() {
       setTable(initialFormState);
       history.push(`/dashboard`);
     } catch (error) {
-      if (error.name !== "AbortError") setTableError(error);
+      setTableError([error.message]);
     }
 
     return () => {

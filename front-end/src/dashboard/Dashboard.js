@@ -6,6 +6,7 @@ import ErrorAlert from "../layout/ErrorAlert";
 import ReservationsList from "../reservations/ReservationsList";
 import { Link } from "react-router-dom";
 import TableList from "../tables/TablesList";
+import { useHistory } from "react-router-dom";
 
 /**
  * Defines the dashboard page.
@@ -15,18 +16,26 @@ import TableList from "../tables/TablesList";
  */
 function Dashboard({ date }) {
   const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
+  const [reservationsError, setReservationsError] = useState([]);
   const [tables, setTables] = useState([]);
-  const [tablesError, setTablesError] = useState(null);
+
+  // Stores the query value if there is one present in the url
   const queryDate = useQuery().get("date");
+  const history = useHistory();
 
   if (queryDate) {
     date = queryDate;
   }
 
+  const dateObj = new Date(`${date} PDT`);
+  const dateString = dateObj.toDateString();
+
+  // Use effect sends a get request to the database for reservations and tables information
+  // Filter the reservation information then store the array in state.
+  // store tables in state
   useEffect(() => {
     const abortController = new AbortController();
-    const loadReservations = async () => {
+    const loadData = async () => {
       try {
         const recallReservations = await listReservations(
           { date },
@@ -38,22 +47,14 @@ function Dashboard({ date }) {
           }
         });
         setReservations(rsvps);
-      } catch (error) {
-        setReservationsError(error.message);
-      }
-    };
-
-    const loadTables = async () => {
-      try {
         const recallTables = await listTables(abortController.signal);
         setTables(recallTables);
       } catch (error) {
-        setTables(error.message);
+        setReservationsError([error.message]);
       }
     };
 
-    loadReservations();
-    loadTables();
+    loadData();
     return () => abortController.abort();
   }, [date]);
 
@@ -68,73 +69,61 @@ function Dashboard({ date }) {
 
   return (
     <main>
-      <h1>Dashboard</h1>
-      <div className="btn-group grid gap-3" role="group">
-        <div>
-          <Link
-            to={`/dashboard?date=${previous(date)}`}
-            className="btn btn-dark"
+      <h1 className="text-center">Dashboard</h1>
+      <div>
+        <div className="text-center">
+          <button
+            type="button"
+            className="btn btn-dark mr-3"
+            onClick={() => {
+              history.push(`/dashboard?date=${previous(date)}`);
+            }}
           >
-            Previous Day
-          </Link>
-        </div>
-        <br />
-        <div>
-          <Link to={`dashboard?date=${today()}`} className="btn btn-dark">
+            Previous
+          </button>
+          <button
+            type="button"
+            className="btn btn-light mr-3"
+            onClick={() => {
+              history.push(`dashboard?date=${today()}`);
+            }}
+          >
             Today
-          </Link>
+          </button>
+          <button
+            type="button"
+            className="btn btn-dark mr-3"
+            onClick={() => {
+              history.push(`dashboard?date=${next(date)}`);
+            }}
+          >
+            Next
+          </button>
         </div>
-        <br />
-        <div>
-          <Link to={`dashboard?date=${next(date)}`} className="btn btn-dark">
-            Next Date
-          </Link>
+        <div className="d-md-flex justify-content-center pt-4">
+          <h5 className="text-center"> Reservations for {dateString}</h5>
         </div>
-      </div>
-      <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      <ErrorAlert error={tablesError} />
-      <div>{listRsvp}</div>
-      <hr />
-      <h4>Tables:</h4>
-      <hr />
-      <div>
-        {tables.map((table, id) => {
-          return (
-            <div key={table.table_id}>
-              <TableList setTablesError={setTablesError} table={table} />
-              {/* <h6>
-                Table: {table.table_name} - Capacity: {table.capacity}
-              </h6>
-              {table.reservation_id && (
-                <div>
-                  <p
-                    data-table-id-status={`${table.table_id}`}
-                    value={table.table_id}
-                  >
-                    {table.reservation_id ? "occupied" : "free"}
-                  </p>
-                  <button
-                    className="btn btn-outline-dark"
-                    name={table.table_id}
-                    data-table-id-finish={table.table_id}
-                    onClick={clearTable}
-                  >
-                    Finish
-                  </button>
-                </div>
-              )} */}
-              {/* {!table.reservation_id && (
-                <div>
-                  <p data-table-id-status={`${table.table_id}`}>Free</p>
-                </div>
-              )} 
-              <hr /> */}
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-6 col-xs-1">{listRsvp}</div>
+          <div className="col-lg-6 col-xs-1">
+            <h4 className="text-center">Tables</h4>
+            <div>
+              {tables.map((table, id) => {
+                return (
+                  <div key={table.table_id}>
+                    <TableList
+                      setTablesError={setReservationsError}
+                      table={table}
+                    />
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
+          </div>
+        </div>
       </div>
     </main>
   );
