@@ -15,20 +15,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Redirects react to index.html pg
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 app.use("/reservations", reservationsRouter);
 app.use("/tables", tablesRouter);
-
-// Redirects react to index.html pg
-app.get("/*", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../../front-end/public/index.html"),
-    function (err) {
-      if (err) {
-        res.status(500).send(err);
-      }
-    }
-  );
-});
 
 app.use(notFound);
 app.use(errorHandler);
