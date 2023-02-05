@@ -92,12 +92,24 @@ const dateValidation = (req, res, next) => {
   // creates a new date using the reservation date and time
   const date = new Date(`${data.reservation_date} ${data.reservation_time}`);
 
-  if (date.getTime() < new Date().getTime()) {
+  const reservation = new Date(`${data.reservation_date} PDT`).setHours(
+    data.reservation_time.substring(0, 2),
+    data.reservation_time.substring(3)
+  );
+
+  if (reservation < Date.now()) {
     return next({
       status: 400,
       message: `Reservations can only be created using a future date.`,
     });
   }
+
+  // if (date.getTime() < new Date().getTime()) {
+  //   return next({
+  //     status: 400,
+  //     message: `Reservations can only be created using a future date.`,
+  //   });
+  // }
 
   if (date.getDay() === 2) {
     return next({
