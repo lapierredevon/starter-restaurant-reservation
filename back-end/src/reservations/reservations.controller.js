@@ -83,17 +83,19 @@ const hasValidProperties = (req, res, next) => {
 };
 
 const futureDateValidation = (req, res, next) => {
-  const { data = {} } = req.body;
-  const date = new Date(`${data.reservation_date} ${data.reservation_time}`);
-
-  if (date.getTime() > new Date().getTime()) {
+  const {
+    data: { reservation_date, reservation_time },
+  } = req.body;
+  let now = Date.now();
+  let bookedTime = Date.parse(`${reservation_date} ${reservation_time} EST`);
+  if (bookedTime > now) {
     return next();
+  } else {
+    return next({
+      status: 400,
+      message: "Reservations must be made in the future.",
+    });
   }
-
-  next({
-    status: 400,
-    message: `Reservations can only be created using a future date.`,
-  });
 };
 
 const validTableStatuses = ["seated", "booked", "cancelled", "finished"];
