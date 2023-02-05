@@ -82,6 +82,20 @@ const hasValidProperties = (req, res, next) => {
   next();
 };
 
+const futureDateValidation = (req, res, next) => {
+  const { data = {} } = req.body;
+  const date = new Date(`${data.reservation_date} ${data.reservation_time}`);
+
+  if (date.getTime() > new Date().getTime()) {
+    return next();
+  }
+
+  next({
+    status: 400,
+    message: `Reservations can only be created using a future date.`,
+  });
+};
+
 const validTableStatuses = ["seated", "booked", "cancelled", "finished"];
 
 // This validation middleware makes sure that the posted data meets certain requirements.
@@ -93,12 +107,12 @@ const dateValidation = (req, res, next) => {
   // creates a new date using the reservation date and time
   const date = new Date(`${data.reservation_date} ${data.reservation_time}`);
 
-  if (date.getTime() < new Date().getTime()) {
-    return next({
-      status: 400,
-      message: `Reservations can only be created using a future date.`,
-    });
-  }
+  // if (date.getTime() < new Date().getTime()) {
+  //   return next({
+  //     status: 400,
+  //     message: `Reservations can only be created using a future date.`,
+  //   });
+  // }
 
   if (date.getDay() === 2) {
     return next({
@@ -221,6 +235,7 @@ module.exports = {
   create: [
     hasValidProperties,
     dateValidation,
+    futureDateValidation,
     isTableBooked,
     asyncErrorBoundary(create),
   ],
@@ -229,6 +244,7 @@ module.exports = {
     asyncErrorBoundary(reservationExists),
     hasValidProperties,
     dateValidation,
+    futureDateValidation,
     asyncErrorBoundary(update),
   ],
   updateReservationStatus: [
