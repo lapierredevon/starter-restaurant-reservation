@@ -35,6 +35,19 @@ function NewReservation() {
     const abortController = new AbortController();
     event.preventDefault();
 
+    const reservation = new Date(`${formData.reservation_date} PDT`).setHours(
+      formData.reservation_time.substring(0, 2),
+      formData.reservation_time.substring(3)
+    );
+    console.log("reservation CD", reservation);
+    console.log("Date Now FD", Date.now());
+
+    const date = new Date(
+      `${formData.reservation_date} ${formData.reservation_time}`
+    );
+    console.log("date New Date CD", date.getTime());
+    console.log("date Date Now FD", new Date().getTime());
+
     try {
       let rsvp = formData;
       setFormData(initialFormState);
