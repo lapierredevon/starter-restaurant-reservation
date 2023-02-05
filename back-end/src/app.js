@@ -15,13 +15,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Redirects react to index.html pg
-app.use(express.static(path.join(__dirname, "build")));
-
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
-
 app.use("/reservations", reservationsRouter);
 app.use("/tables", tablesRouter);
 
