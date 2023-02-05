@@ -3,6 +3,7 @@
  */
 const reservationsService = require("./reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
+const { DatabaseError } = require("pg");
 
 //--------------------------VALIDATION MIDDLEWARE STARTS-------------------------------------
 // Checks to see if there is an existing reservation in database.
@@ -97,7 +98,11 @@ const dateValidation = (req, res, next) => {
     data.reservation_time.substring(3)
   );
 
-  if (reservation < Date.now()) {
+  const now = Date.now();
+
+  if (reservation < now) {
+    console.log("reservation", reservation);
+    console.log("now", now);
     return next({
       status: 400,
       message: `Reservations can only be created using a future date.`,
