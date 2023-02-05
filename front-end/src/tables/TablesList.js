@@ -3,7 +3,7 @@ import { finishTable } from "../utils/api";
 import { useHistory } from "react-router";
 
 export default function TableList({ table, setTablesError }) {
-  const history = useHistory();
+  // const history = useHistory();
 
   // This function sends a PUT request, which updates status of reservation to cancelled
   async function clearTable(event) {
@@ -16,7 +16,8 @@ export default function TableList({ table, setTablesError }) {
     ) {
       try {
         await finishTable(table.table_id, abortController.signal);
-        history.go(0);
+        // history.go(0);
+        window.location.reload(false);
       } catch (error) {
         setTablesError([error.message]);
       }
