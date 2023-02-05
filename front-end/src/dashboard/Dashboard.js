@@ -29,9 +29,8 @@ function Dashboard({ date }) {
   const dateObj = new Date(`${date} PDT`);
   const dateString = dateObj.toDateString();
 
-  // Use effect sends a get request to the database for reservations and tables information
+  // Use effect sends a get request to the database for reservations information
   // Filter the reservation information then store the array in state.
-  // store tables in state
   useEffect(() => {
     const abortController = new AbortController();
     const loadData = async () => {
@@ -46,9 +45,8 @@ function Dashboard({ date }) {
           }
         });
         setReservations(rsvps);
-        const recallTables = await listTables(abortController.signal);
-        setTables(recallTables);
       } catch (error) {
+        setReservations([]);
         setReservationsError([error.message]);
       }
     };
@@ -56,6 +54,22 @@ function Dashboard({ date }) {
     loadData();
     return () => abortController.abort();
   }, [date]);
+
+  // Sends get request for tables stores information state
+  useEffect(() => {
+    const abortController = new AbortController();
+    const loadData = async () => {
+      try {
+        const recallTables = await listTables(abortController.signal);
+        setTables(recallTables);
+      } catch (error) {
+        setTables([]);
+        setReservationsError([error.message]);
+      }
+    };
+    loadData();
+    return () => abortController.abort();
+  }, []);
 
   const listRsvp = reservations.map((reservation) => {
     return (
