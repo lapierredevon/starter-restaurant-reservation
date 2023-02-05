@@ -37,10 +37,9 @@ function NewReservation() {
 
     try {
       let rsvp = formData;
-      setFormData(initialFormState);
       rsvp.people = Number(rsvp.people);
       await postReservations(rsvp, abortController.signal);
-
+      setFormData(initialFormState);
       history.push(`/dashboard?date=${rsvp.reservation_date}`);
     } catch (error) {
       setReservationError([...reservationError, error.message]);

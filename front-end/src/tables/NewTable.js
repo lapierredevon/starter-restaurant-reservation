@@ -24,11 +24,11 @@ function NewTable() {
     const abortController = new AbortController();
     event.preventDefault();
     let newTable = table;
-    setTable(initialFormState);
     newTable.capacity = Number(newTable.capacity);
 
     try {
       await postTables(newTable, abortController.signal);
+      setTable(initialFormState);
       history.push(`/dashboard`);
     } catch (error) {
       setTableError([error.message]);

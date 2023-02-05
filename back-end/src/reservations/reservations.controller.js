@@ -103,18 +103,9 @@ const validTableStatuses = ["seated", "booked", "cancelled", "finished"];
 // This validation middleware makes sure that the posted data meets certain requirements.
 const dateValidation = (req, res, next) => {
   const { data = {} } = req.body;
-  // console.log("time", data.reservation_time);
-  // console.log("date", data.reservation_date);
 
   // creates a new date using the reservation date and time
   const date = new Date(`${data.reservation_date} ${data.reservation_time}`);
-
-  // if (date.getTime() < new Date().getTime()) {
-  //   return next({
-  //     status: 400,
-  //     message: `Reservations can only be created using a future date.`,
-  //   });
-  // }
 
   if (date.getDay() === 2) {
     return next({
