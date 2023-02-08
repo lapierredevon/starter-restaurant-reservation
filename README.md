@@ -6,7 +6,7 @@ This project was completed for my final capstone at Thinkful's Engineering progr
 
 ## Website Link
 
-Link: `https://restaurant-reservation-dcl.onrender.com`
+Link: https://restaurant-reservation-dcl.onrender.com
 
 ## Application Features
 
@@ -16,31 +16,31 @@ Any existing reservations and tables are displayed on the dashboard. Selecting t
 If there are no existing reservations on a specific day the reservations section will be left blank.
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.24.58%20PM.png)
 
-Selecting `new reservation` allows you to create a new reservation. Users will be alerted of any errors they make when they are filling out the form.
+Selecting `New Reservation` allows you to create a new reservation. Users will be alerted of any errors they make when they are filling out the form.
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.19.06%20PM.png)
 
 When a form is submitted the dashboard for the reservation date previously submitted will be displayed. Users have the option of editing, canceling or seating a reservation.
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.22.00%20PM.png)
 
-Pressing the `seat` button will navigate users to the seat form where employees can reserve a table for a reservation. Users will be alerted of any errors when they are filling out the form.
+Pressing the `Seat` button will navigate users to the seat form where employees can reserve a table for a reservation. Users will be alerted of any errors when they are filling out the form.
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.24.18%20PM.png)
 
 When a reservation is seated at a table, its status on the dashboard will be changed to `seated`. That table's status will display `occupied`.
 ![Alt text](/Images/Screen%20Shot%202023-02-07%20at%207.22.34%20PM.png)
 
-Selecting the `cancel` button will cause a pop up message to appear, which will give the user an option to cancel the reservation.
+Selecting the `Cancel` button will cause a pop up message to appear, which will give the user an option to cancel the reservation.
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.25.37%20PM.png)
 
-The `edit` button navigates employees to the edit form, which allows them to edit reservations. Forms are prefilled with the current reservations data.
+The `Edit` button navigates employees to the edit form, which allows them to edit reservations. Forms are prefilled with the current reservations data.
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.20.51%20PM.png)
 
-When a table is occupied, a `finish` button will appear on the tables card. If the finish button is selected, a pop-up message will appear giving users the option to change the table's status back to `free`.
+When a table is occupied, a `Finish` button will appear on the tables card. If the finish button is selected, a pop-up message will appear giving users the option to change the table's status back to `free`.
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.24.45%20PM.png)
 
-Selecting `new table` allows users to create a new table
+Selecting `New Table` allows users to create a new table
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.20.13%20PM.png)
 
-Selecting the `search` button will take users to the search form where they can search for a reservation by their number.
+Selecting the `Search` button will take users to the search form where they can search for a reservation by their number.
 ![Alt text](/Images/Screen%20Shot%202023-02-06%20at%202.23.18%20PM.png)
 
 ## Technologies Used
@@ -61,7 +61,7 @@ Selecting the `search` button will take users to the search form where they can 
 - Puppeteer
 
 `Back-end`
-API Base Url:` https://restaurant-reservation-zp4g.onrender.com`
+API Base Url: https://restaurant-reservation-zp4g.onrender.com
 
 Endpoint Description
 
